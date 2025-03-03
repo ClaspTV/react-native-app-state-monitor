@@ -1,16 +1,37 @@
-# react-native-app-state-monitor
+# React Native App State Monitor
+
+<p align="center">
+  <a href="https://vizbee.tv">
+    <img src="https://your-logo-url.com/vizbee-logo.png" alt="Vizbee Logo" width="300"/>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ClaspTV/react-native-app-state-monitor/actions">
+    <img src="https://github.com/ClaspTV/react-native-app-state-monitor/workflows/CI/badge.svg" alt="CI Status"/>
+  </a>
+  <a href="https://www.npmjs.com/package/react-native-app-state-monitor">
+    <img src="https://img.shields.io/npm/v/react-native-app-state-monitor.svg" alt="NPM Version"/>
+  </a>
+  <a href="https://github.com/ClaspTV/react-native-app-state-monitor/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/ClaspTV/react-native-app-state-monitor.svg" alt="License"/>
+  </a>
+  <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20Android-brightgreen" alt="Platforms"/>
+</p>
+
+## 🌟 About
 
 A lightweight React Native module that accurately tracks app foreground/background state using native platform lifecycle observers, ensuring reliable app state detection.
 
-## Features
+## ✨ Features
 
-- Precise app state detection on both Android and iOS
-- Uses Android's `ProcessLifecycleOwner` and iOS UIApplication notifications
-- Works correctly with multiple activities and complex app lifecycles
-- Simple and consistent API
-- Supports React Native ≥ 0.60.0
+- 🔍 Precise app state detection on both Android and iOS
+- 🏗️ Uses Android's `ProcessLifecycleOwner` and iOS UIApplication notifications
+- 🔀 Works correctly with multiple activities and complex app lifecycles
+- 🧩 Simple and consistent API
+- 📱 Supports React Native ≥ 0.60.0
 
-## Installation
+## 📦 Installation
 
 ```bash
 npm install react-native-app-state-monitor
@@ -18,121 +39,52 @@ npm install react-native-app-state-monitor
 yarn add react-native-app-state-monitor
 ```
 
-### Automatic linking
-
-For React Native 0.60.0 and above, linking is automatic.
-
-## Usage
+## 🚀 Usage
 
 ```javascript
 import AppStateMonitor from 'react-native-app-state-monitor';
 
-// Check current state (may be 'unknown' initially)
+// Check current state
 console.log('Current state:', AppStateMonitor.currentState);
-
-// Get accurate state asynchronously
-AppStateMonitor.getCurrentState().then((state) => {
-  console.log('Accurate current state:', state);
-});
 
 // Add state change listener
 const unsubscribe = AppStateMonitor.addEventListener((newState) => {
   console.log('App state changed to:', newState);
-  
-  if (newState === 'active') {
-    // App is in foreground
-    console.log('App moved to foreground');
-    // Restart animations, fetch data, etc.
-  } else if (newState === 'background') {
-    // App is in background
-    console.log('App moved to background');
-    // Pause operations, save state, etc.
-  }
 });
-
-// Later, when component unmounts
-unsubscribe();
-
-// Alternatively, remove all listeners
-// AppStateMonitor.removeAllListeners();
 ```
 
-### React Hooks Example
+## 📖 Full Documentation
 
-```javascript
-import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import AppStateMonitor from 'react-native-app-state-monitor';
+[View Complete Documentation](docs/API.md)
 
-const AppStateDemo = () => {
-  const [appState, setAppState] = useState(AppStateMonitor.currentState);
-  
-  useEffect(() => {
-    // Get accurate initial state
-    AppStateMonitor.getCurrentState().then(setAppState);
-    
-    // Listen for changes
-    const unsubscribe = AppStateMonitor.addEventListener(setAppState);
-    
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-  
-  return (
-    <View style={{ padding: 20 }}>
-      <Text>Current app state: {appState}</Text>
-      <Text>Is active: {AppStateMonitor.isActive() ? 'Yes' : 'No'}</Text>
-      <Text>Is background: {AppStateMonitor.isBackground() ? 'Yes' : 'No'}</Text>
-    </View>
-  );
-};
-```
+## 🤝 Contributing
 
-## How It Works
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) before getting started.
 
-### Android
-The module uses the AndroidX Lifecycle library's `ProcessLifecycleOwner` to monitor the entire application's lifecycle, providing a reliable way to detect app foreground/background states.
+### 🐛 Reporting Issues
 
-### iOS
-Uses UIApplication notifications to detect app state changes.
+If you encounter any problems, please [open an issue](https://github.com/ClaspTV/react-native-app-state-monitor/issues/new/choose) with a clear description of the problem.
 
-## API
+## 💡 Why This Module?
 
-### Supported States
-- `'active'`: App is in the foreground
-- `'background'`: App is in the background
-- `'unknown'`: Initial state or unable to determine
+React Native's built-in `AppState` has known limitations, particularly on Android. This module provides:
 
-### Properties
+- 🔒 More reliable state detection
+- 🔄 Consistent behavior across platforms
+- 🛠️ Advanced tracking for multi-activity scenarios
 
-- `AppStateMonitor.currentState` - Returns the current state
+## 📋 Requirements
 
-### Methods
+- React Native ≥ 0.60.0
+- iOS ≥ 10.0
+- Android API level ≥ 21
 
-- `AppStateMonitor.getCurrentState()` - Returns a Promise that resolves to the current app state
-- `AppStateMonitor.addEventListener(listener)` - Add a listener for state changes and returns a function to remove the listener
-- `AppStateMonitor.removeAllListeners()` - Remove all registered listeners
-- `AppStateMonitor.isActive()` - Returns true if the app is in the foreground
-- `AppStateMonitor.isBackground()` - Returns true if the app is in the background
+## 🔒 License
 
-## Differences from React Native's AppState
+[MIT License](LICENSE)
 
-- More reliable state detection
-- Works correctly with multiple activities
-- Provides additional utility methods
-- Consistent state values across platforms
+## 🏢 About Vizbee
 
-## Development and Building
+[Vizbee](https://vizbee.tv) is revolutionizing media interaction. This open-source module is part of our commitment to providing high-quality developer tools.
 
-1. Clone the repository
-2. Install dependencies: `npm install` or `yarn install`
-3. For iOS: `cd ios && pod install`
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT
+---
