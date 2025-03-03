@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://vizbee.tv">
-    <img src="https://your-logo-url.com/vizbee-logo.png" alt="Vizbee Logo" width="300"/>
+    <img src="https://avatars.githubusercontent.com/u/10885409?s=96&v=4" alt="Vizbee Logo" width="300"/>
   </a>
 </p>
 
