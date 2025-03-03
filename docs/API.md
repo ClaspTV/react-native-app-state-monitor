@@ -14,7 +14,7 @@ import AppStateMonitor from 'react-native-app-state-monitor';
 
 The module supports three app states:
 
-- `'active'`: The app is in the foreground and receiving user interactions
+- `'foreground'`: The app is in the foreground and receiving user interactions
 - `'background'`: The app is not visible to the user
 - `'unknown'`: Initial state or unable to determine current state
 
@@ -28,7 +28,7 @@ Returns the current app state.
 
 ```javascript
 const currentState = AppStateMonitor.currentState;
-console.log(currentState); // 'active', 'background', or 'unknown'
+console.log(currentState); // 'foreground', 'background', or 'unknown'
 ```
 
 ## Methods
@@ -71,14 +71,14 @@ Removes all registered state change listeners.
 AppStateMonitor.removeAllListeners();
 ```
 
-### `isActive()`
+### `isForeground()`
 
 **Returns**: `boolean`
 
-Checks if the app is in the active state.
+Checks if the app is in the foreground state.
 
 ```javascript
-const isAppActive = AppStateMonitor.isActive();
+const isAppForeground = AppStateMonitor.isForeground();
 ```
 
 ### `isBackground()`
@@ -105,9 +105,9 @@ const AppStateDemo = () => {
 
     // Add state change listener
     const unsubscribe = AppStateMonitor.addEventListener((newState) => {
-      if (newState === 'active') {
-        // Perform actions when app becomes active
-        console.log('App is now active');
+      if (newState === 'foreground') {
+        // Perform actions when app becomes foreground
+        console.log('App is now foreground');
       } else if (newState === 'background') {
         // Perform actions when app goes to background
         console.log('App is now in background');
@@ -123,7 +123,7 @@ const AppStateDemo = () => {
   return (
     <View>
       <Text>Current App State: {AppStateMonitor.currentState}</Text>
-      <Text>Is Active: {AppStateMonitor.isActive() ? 'Yes' : 'No'}</Text>
+      <Text>Is foreground: {AppStateMonitor.isForeground() ? 'Yes' : 'No'}</Text>
     </View>
   );
 };

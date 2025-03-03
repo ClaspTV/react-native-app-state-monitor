@@ -25,7 +25,7 @@ RCT_EXPORT_MODULE(RNAppStateMonitor)
   if (self = [super init]) {
     // Determine initial state
     UIApplicationState initialState = UIApplication.sharedApplication.applicationState;
-    _currentState = initialState == UIApplicationStateActive ? @"active" : @"background";
+    _currentState = initialState == ( UIApplicationStateActive || UIApplicationStateInactive) ? @"foreground" : @"background";
     
     RNAppStateLogDebug("Initializing RNAppStateMonitor - Initial state: %@", _currentState);
     
@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE(RNAppStateMonitor)
     // Register for application state change notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAppStateDidChange:)
-                                                 name:UIApplicationDidBecomeActiveNotification
+                                                 name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -87,9 +87,9 @@ RCT_EXPORT_MODULE(RNAppStateMonitor)
 {
   NSString *newState;
   
-  if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification]) {
-    newState = @"active";
-    RNAppStateLog("Application became active");
+  if ([notification.name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
+    newState = @"foreground";
+    RNAppStateLog("Application became foreground");
   } else if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {
     newState = @"background";
     RNAppStateLog("Application entered background");

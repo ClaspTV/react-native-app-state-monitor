@@ -68,8 +68,8 @@ class AppStateMonitor {
     }
   }
   
-  isActive() {
-    return this._currentState === 'active';
+  isForeground() {
+    return this._currentState === 'foreground';
   }
   
   isBackground() {

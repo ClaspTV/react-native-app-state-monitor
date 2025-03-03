@@ -108,7 +108,7 @@ public class RNAppStateMonitor extends ReactContextBaseJavaModule implements Lif
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onAppForeground() {
         Log.d(TAG, "ProcessLifecycleOwner ON_START");
-        sendAppStateEvent("active");
+        sendAppStateEvent("foreground");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
