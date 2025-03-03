@@ -1,42 +1,42 @@
 # react-native-app-state-monitor
 
-A TypeScript-based React Native module that accurately tracks app foreground/background state using Android's ProcessLifecycleOwner, ensuring reliable app state detection even with multiple activities.
+A lightweight React Native module that accurately tracks app foreground/background state using native platform lifecycle observers, ensuring reliable app state detection.
 
 ## Features
 
-- Uses Android's `ProcessLifecycleOwner` for reliable app state detection
-- Works correctly with multiple activities
-- Written in TypeScript with full type definitions
-- Simple and consistent API for both platforms
+- Precise app state detection on both Android and iOS
+- Uses Android's `ProcessLifecycleOwner` and iOS UIApplication notifications
+- Works correctly with multiple activities and complex app lifecycles
+- Simple and consistent API
 - Supports React Native ≥ 0.60.0
 
 ## Installation
 
 ```bash
-npm install react-native-app-state-monitor --save
+npm install react-native-app-state-monitor
 # or
 yarn add react-native-app-state-monitor
 ```
 
 ### Automatic linking
 
-For React Native 0.60.0 and above, linking is automatic. The library uses autolinking to connect itself to your app.
+For React Native 0.60.0 and above, linking is automatic.
 
 ## Usage
 
-```typescript
-import AppState, { AppStateType } from 'react-native-app-state-monitor';
+```javascript
+import AppStateMonitor from 'react-native-app-state-monitor';
 
 // Check current state (may be 'unknown' initially)
-console.log('Current state:', AppState.currentState);
+console.log('Current state:', AppStateMonitor.currentState);
 
 // Get accurate state asynchronously
-AppState.getCurrentState().then((state: AppStateType) => {
+AppStateMonitor.getCurrentState().then((state) => {
   console.log('Accurate current state:', state);
 });
 
 // Add state change listener
-const unsubscribe = AppState.addEventListener((newState: AppStateType) => {
+const unsubscribe = AppStateMonitor.addEventListener((newState) => {
   console.log('App state changed to:', newState);
   
   if (newState === 'active') {
@@ -54,25 +54,25 @@ const unsubscribe = AppState.addEventListener((newState: AppStateType) => {
 unsubscribe();
 
 // Alternatively, remove all listeners
-// AppState.removeAllListeners();
+// AppStateMonitor.removeAllListeners();
 ```
 
 ### React Hooks Example
 
-```typescript
+```javascript
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
-import AppState, { AppStateType } from 'react-native-app-state-monitor';
+import AppStateMonitor from 'react-native-app-state-monitor';
 
-const AppStateDemo: React.FC = () => {
-  const [appState, setAppState] = useState<AppStateType>(AppState.currentState);
+const AppStateDemo = () => {
+  const [appState, setAppState] = useState(AppStateMonitor.currentState);
   
   useEffect(() => {
     // Get accurate initial state
-    AppState.getCurrentState().then(setAppState);
+    AppStateMonitor.getCurrentState().then(setAppState);
     
     // Listen for changes
-    const unsubscribe = AppState.addEventListener(setAppState);
+    const unsubscribe = AppStateMonitor.addEventListener(setAppState);
     
     return () => {
       unsubscribe();
@@ -82,8 +82,8 @@ const AppStateDemo: React.FC = () => {
   return (
     <View style={{ padding: 20 }}>
       <Text>Current app state: {appState}</Text>
-      <Text>Is active: {AppState.isActive() ? 'Yes' : 'No'}</Text>
-      <Text>Is background: {AppState.isBackground() ? 'Yes' : 'No'}</Text>
+      <Text>Is active: {AppStateMonitor.isActive() ? 'Yes' : 'No'}</Text>
+      <Text>Is background: {AppStateMonitor.isBackground() ? 'Yes' : 'No'}</Text>
     </View>
   );
 };
@@ -92,45 +92,46 @@ const AppStateDemo: React.FC = () => {
 ## How It Works
 
 ### Android
-The module uses the AndroidX Lifecycle library's `ProcessLifecycleOwner` to monitor the entire application's lifecycle, not just individual activities. This provides a more reliable way to detect app foreground/background states, especially with multiple activities.
+The module uses the AndroidX Lifecycle library's `ProcessLifecycleOwner` to monitor the entire application's lifecycle, providing a reliable way to detect app foreground/background states.
 
 ### iOS
-The module uses UIApplication notifications to detect app state changes.
+Uses UIApplication notifications to detect app state changes.
 
 ## API
 
-### Types
-
-```typescript
-type AppStateType = 'active' | 'background' | 'unknown';
-type AppStateListener = (state: AppStateType) => void;
-```
+### Supported States
+- `'active'`: App is in the foreground
+- `'background'`: App is in the background
+- `'unknown'`: Initial state or unable to determine
 
 ### Properties
 
-- `AppState.currentState: AppStateType` - Returns the current state
+- `AppStateMonitor.currentState` - Returns the current state
 
 ### Methods
 
-- `AppState.getCurrentState(): Promise<AppStateType>` - Returns a Promise that resolves to the current app state
-- `AppState.addEventListener(listener: AppStateListener): () => void` - Add a listener for state changes and returns a function to remove the listener
-- `AppState.removeAllListeners(): void` - Remove all registered listeners
-- `AppState.isActive(): boolean` - Returns true if the app is in the foreground
-- `AppState.isBackground(): boolean` - Returns true if the app is in the background
+- `AppStateMonitor.getCurrentState()` - Returns a Promise that resolves to the current app state
+- `AppStateMonitor.addEventListener(listener)` - Add a listener for state changes and returns a function to remove the listener
+- `AppStateMonitor.removeAllListeners()` - Remove all registered listeners
+- `AppStateMonitor.isActive()` - Returns true if the app is in the foreground
+- `AppStateMonitor.isBackground()` - Returns true if the app is in the background
 
 ## Differences from React Native's AppState
 
-- Uses `ProcessLifecycleOwner` on Android for more reliable detection
+- More reliable state detection
 - Works correctly with multiple activities
-- More consistent state values between platforms
-- Full TypeScript support
-- Provides additional utility methods like `isActive()` and `isBackground()`
+- Provides additional utility methods
+- Consistent state values across platforms
 
 ## Development and Building
 
 1. Clone the repository
-2. Install dependencies: `yarn install`
-3. Build the TypeScript files: `yarn build`
+2. Install dependencies: `npm install` or `yarn install`
+3. For iOS: `cd ios && pod install`
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
