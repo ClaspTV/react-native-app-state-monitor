@@ -85,6 +85,6 @@ React Native's built-in `AppState` has known limitations, particularly on Androi
 
 ## 🏢 About Vizbee
 
-[Vizbee](https://vizbee.tv) is revolutionizing media interaction. This open-source module is part of our commitment to providing high-quality developer tools.
+[Vizbee](https://vizbee.tv) is transforming fragmented experiences across mobile and streaming devices in a home into one seamless app experience to increase viewer acquisition and monetization.
 
 ---
