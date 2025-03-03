@@ -1,0 +1,28 @@
+{
+  "name": "react-native-app-state-monitor",
+  "version": "1.0.0-rc.2",
+  "description": "A lightweight React Native app state monitoring module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "app-state",
+    "monitor"
+  ],
+  "peerDependencies": {
+    "react-native": ">=0.60.0 <=0.76.5"
+  },
+  "author": "Vizbee",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClaspTV/react-native-app-state-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ClaspTV/react-native-app-state-monitor/issues"
+  },
+  "homepage": "https://github.com/ClaspTV/react-native-app-state-monitor#readme"
+
+}
